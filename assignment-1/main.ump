@@ -1,2 +1,64 @@
-class Foo {
+class Person
+{
+  
 }
+
+class Bank {
+  
+}
+
+class Client {
+  
+   
+  * -- * Person;
+}
+
+class Account
+{
+     
+* -- * Client;
+  * -- * AccountType;
+  * -- * Bank;
+}class SavingAccount
+{
+  isA Account;
+}
+
+class CheckingAccount
+{
+}
+
+class InvestmentAccount 
+{
+  
+  isA Account;
+}
+
+class LoadAccount {
+  
+  isA Account;
+}
+
+class AccountType
+{
+  }
+
+class Minor
+{
+  isA AccountType;
+}
+
+class Student
+{
+  isA AccountType;
+}
+
+class NewClass
+{
+}
+
+class Adult
+{
+  isA AccountType;
+}
+
