@@ -1,9 +1,18 @@
 class Person
 {
   
+  firstName;
+  middleName;
+  lastName;
+  gender;
+  age;
+  dateOfBirth;
+  phoneNumber;
+  homeAddress;
+  occupation;
 }
 
-class Bank {
+class ExternalBank {
   
 }
 
@@ -18,7 +27,8 @@ class Account
      
 * -- * Client;
   * -- * AccountType;
-  * -- * Bank;
+  * -- * ExternalBank;
+  * -- * LoyalityProgram;
 }class SavingAccount
 {
   isA Account;
@@ -26,6 +36,7 @@ class Account
 
 class CheckingAccount
 {
+  isA Account;
 }
 
 class InvestmentAccount 
@@ -41,24 +52,44 @@ class LoadAccount {
 
 class AccountType
 {
-  }
+    * -- * Minor;
+  * -- * Student;
+  * -- * Adult;
+}
 
 class Minor
 {
-  isA AccountType;
 }
 
 class Student
 {
-  isA AccountType;
 }
 
-class NewClass
-{
-}
 
 class Adult
 {
-  isA AccountType;
+  * -- * SmallBusiness;
+  * -- * LargeBusiness;
+  * -- * Investor;
+  * -- * Individual;
 }
 
+class Investor
+{
+}
+
+class Individual
+{
+}
+
+class SmallBusiness
+{
+}
+
+class LargeBusiness 
+{
+  
+}
+class LoyalityProgram
+{
+}
