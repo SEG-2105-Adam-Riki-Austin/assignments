@@ -68,7 +68,7 @@ public class Assignment {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         List<Note> notes = null;
 
         if (args.length != 1) {
@@ -111,12 +111,7 @@ public class Assignment {
 
         for (var note : notes) {
             synchronizer.sendNote(note);
-            try {
-                Thread.sleep(500);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return;
-            }
+            Thread.sleep(500);
         }
 
         t1.interrupt();
