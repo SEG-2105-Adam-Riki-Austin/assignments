@@ -111,8 +111,10 @@ public class Assignment {
 
         for (var note : notes) {
             synchronizer.sendNote(note);
-            Thread.sleep(500);
+            Thread.sleep(750);
         }
+
+        Thread.sleep(1000);
 
         t1.interrupt();
         t2.interrupt();
