@@ -1,7 +1,7 @@
 import java.util.List;
 import java.util.Map;
 
-public class Task1 {
+public class Assignment {
     static Map<Note, String> noteMap = Map.of(
             Note.DO, "./Sounds/do.wav",
             Note.RE, "./Sounds/re.wav",
@@ -39,12 +39,12 @@ public class Task1 {
         DO_OCTAVE,
     }
 
-    static class Player extends Thread {
+    static class PlayerThread extends Thread {
         Synchronizer synchronizer;
         List<Note> allowedNotes;
         int id;
 
-        Player(int id, Synchronizer synchronizer, List<Note> allowedNotes) {
+        PlayerThread(int id, Synchronizer synchronizer, List<Note> allowedNotes) {
             this.id = id;
             this.synchronizer = synchronizer;
             this.allowedNotes = allowedNotes;
@@ -61,8 +61,7 @@ public class Task1 {
                             System.out.printf("Thread %d playing note %s\n", this.id, nextNote.toString());
                         }
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (InterruptedException e) {
                     return;
                 }
             }
@@ -70,19 +69,42 @@ public class Task1 {
     }
 
     public static void main(String[] args) {
-        Synchronizer synchronizer = new Synchronizer();
-        Player t1 = new Player(1, synchronizer, List.of(Note.DO, Note.MI, Note.SOL, Note.SI, Note.DO_OCTAVE));
-        Player t2 = new Player(2, synchronizer, List.of(Note.RE, Note.FA, Note.LA, Note.DO_OCTAVE));
+        List<Note> notes = null;
 
-        List<Note> notes = List.of(
-                Note.DO,
-                Note.RE,
-                Note.MI,
-                Note.FA,
-                Note.SOL,
-                Note.LA,
-                Note.SI,
-                Note.DO_OCTAVE);
+        if (args.length != 1) {
+            System.err.println("Must provide either 1 or 2 (for tasks 1 and 2 respectively) as an argument.");
+            System.exit(2);
+        }
+
+        switch (args[0]) {
+            case "1":
+                notes = List.of(
+                        Note.DO,
+                        Note.RE,
+                        Note.MI,
+                        Note.FA,
+                        Note.SOL,
+                        Note.LA,
+                        Note.SI,
+                        Note.DO_OCTAVE);
+                break;
+            case "2":
+                notes = List.of(
+                        Note.DO, Note.DO, Note.SOL, Note.SOL, Note.LA, Note.LA, Note.SOL, Note.FA, Note.FA, Note.MI,
+                        Note.MI, Note.RE, Note.RE, Note.DO, Note.SOL, Note.SOL, Note.FA, Note.FA, Note.MI, Note.MI,
+                        Note.RE, Note.SOL, Note.SOL, Note.FA, Note.FA, Note.MI, Note.MI, Note.RE, Note.DO, Note.DO,
+                        Note.SOL, Note.SOL, Note.LA, Note.LA, Note.SOL, Note.FA, Note.FA, Note.MI, Note.MI, Note.RE,
+                        Note.RE, Note.DO);
+                break;
+            default:
+                System.err.println("Invalid argument");
+                System.exit(1);
+        }
+
+        Synchronizer synchronizer = new Synchronizer();
+        PlayerThread t1 = new PlayerThread(1, synchronizer,
+                List.of(Note.DO, Note.MI, Note.SOL, Note.SI, Note.DO_OCTAVE));
+        PlayerThread t2 = new PlayerThread(2, synchronizer, List.of(Note.RE, Note.FA, Note.LA, Note.DO_OCTAVE));
 
         t1.start();
         t2.start();
@@ -96,5 +118,8 @@ public class Task1 {
                 return;
             }
         }
+
+        t1.interrupt();
+        t2.interrupt();
     }
 }
